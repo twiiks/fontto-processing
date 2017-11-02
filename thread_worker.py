@@ -1,4 +1,4 @@
-import time, threading, pika, logging, json
+import threading, pika, logging, json
 
 
 class ThreadWorker(threading.Thread):
@@ -33,5 +33,4 @@ class ThreadWorker(threading.Thread):
         received_message_dumps = json.dumps(received_message, indent=4)
         print(received_message_dumps)
 
-        time.sleep(2)
         # processing...........
