@@ -1,6 +1,8 @@
 # fontto-processing
 > Message Queue for fontto with RabbitMQ
 
+[INFO](http://redmine.twiiks.co/projects/processing-server/wiki#테스트용-publisher)
+
 ## How Work
 1. pull from rabbitMQ (with multithread)
 2. processing
