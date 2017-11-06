@@ -46,6 +46,7 @@ if (!checkArgs(flags)) {
                 messageObj.userId = randomstring.generate({length: 10, charset: 'alphanumeric'});
                 messageObj.count = count;
                 messageObj.unicodes = [];
+                messageObj.env = "development"
 
                 // 유니코드 지정하려면 수정 (랜덤한 갯수의 랜덤한 한글 유니코드를 unicodes 어레이에 푸시)
                 const randomCount = randomstring.generate({length: 1, charset: 'numeric'}) * 1 + 1;

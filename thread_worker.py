@@ -29,6 +29,7 @@ class ThreadWorker(threading.Thread):
         # received_message['userId']
         # received_message['count']
         # received_message['unicodes']
+        # received_message['env']
 
         received_message_dumps = json.dumps(received_message, indent=4)
         print(received_message_dumps)
