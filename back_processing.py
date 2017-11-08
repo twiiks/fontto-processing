@@ -84,7 +84,7 @@ def back_processing(userID, count, unicodes, env):
     logging.info("------------------------------------------------------------")
 
 
-test_userID = 'jexjang'
+test_userID = 'seo'
 test_count = 0
 test_unicodes = ["B9DD"]
 test_env = 'development'
