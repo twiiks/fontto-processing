@@ -33,15 +33,25 @@ def trim_resize_PIL(input_PIL, width, height, border):
 
 
 def noise_filter(PIL_img):
+    """
+    IF use convertio, THEN just pass out the input
+    ELSE, take PIL image and return PIL image
+    """
     modified_PIL = "modified_PIL"
     return modified_PIL
 
 
 def vectoralize(PIL_img):
-    vectored_PIL = "vectoralized PIL"
+    """
+    take PIL, convert to JPG, pass through convertio API, return 'path/name.svg'
+    """
+    vectored_PIL = "/users/sangbuemseo/Desktop/panda.svg" #원래는 생성된 .svg 파일이 들어가야
     return vectored_PIL
 
 
 def svgs2ttf(svg_set):
-    ttf_converted = "converted svg_set to ttf file"
+    """
+    go through hash 'svg_set', read each unicode & svgfile, compine all to one ttf file and return single ttf file
+    """
+    ttf_converted = "user_count.ttf"
     return ttf_converted
