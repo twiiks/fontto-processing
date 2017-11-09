@@ -45,7 +45,7 @@ def vectoralize(PIL_img):
     """
     take PIL, convert to JPG, pass through convertio API, return 'path/name.svg'
     """
-    vectored_PIL = "/users/sangbuemseo/Desktop/panda.svg" #원래는 생성된 .svg 파일이 들어가야
+    vectored_PIL = "./assets/sample.svg" #원래는 생성된 .svg 파일이 들어가야
     return vectored_PIL
 
 
