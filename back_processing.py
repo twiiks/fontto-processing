@@ -89,9 +89,13 @@ def back_processing(userID, count, unicodes, env):
                  (userID, count))
     logging.info("------------------------------------------------------------")
 
+def test():
+    test_userID = 'seo'
+    test_count = 0
+    test_unicodes = ["B9DD"]
+    test_env = 'development'
+    back_processing(test_userID, test_count, test_unicodes, test_env)
 
-test_userID = 'seo'
-test_count = 0
-test_unicodes = ["B9DD"]
-test_env = 'development'
-back_processing(test_userID, test_count, test_unicodes, test_env)
+
+if __name__ == '__main__':
+    test()
