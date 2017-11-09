@@ -34,7 +34,7 @@ def store2S3(env, filetype, userID, count, uni, upload_file):
         buffer = BytesIO()
         upload_file.save(buffer, format='JPEG')
         upload_file = base64.b64encode(buffer.getvalue())
-        
+
         contenttype = 'image/jpeg'
         body = base64.b64decode(upload_file)
     elif filetype == 'vectors':
@@ -49,9 +49,10 @@ def store2S3(env, filetype, userID, count, uni, upload_file):
         contenttype = 'image/jpeg'
         body = upload_file
 
-    s3key = '%s/outputs/%s/%s/%s/%s' %(env, filetype, userID, count, uni)
+    s3key = '%s/outputs/%s/%s/%s/%s' % (env, filetype, userID, count, uni)
     s3 = boto3.resource('s3')
-    s3.Bucket('fontto').put_object(Key=s3key, Body=body, ContentType=contenttype, ACL='public-read')
+    s3.Bucket('fontto').put_object(
+        Key=s3key, Body=body, ContentType=contenttype, ACL='public-read')
     full_address = 'https://s3.ap-northeast-2.amazonaws.com/fontto/' + s3key
     return full_address
 
@@ -60,8 +61,9 @@ def ttf2S3(env, userID, count, ttf_converted):
     contenttype = 'font/ttf'
     body = ttf_converted
 
-    s3key = '%s/outputs/ttf/%s/%s' %(env, userID, count)
+    s3key = '%s/outputs/ttf/%s/%s' % (env, userID, count)
     s3 = boto3.resource('s3')
-    s3.Bucket('fontto').put_object(Key=s3key, Body=body, ContentType=contenttype, ACL='public-read')
+    s3.Bucket('fontto').put_object(
+        Key=s3key, Body=body, ContentType=contenttype, ACL='public-read')
     ttf_address = 'https://s3.ap-northeast-2.amazonaws.com/fontto/' + s3key
     return ttf_address

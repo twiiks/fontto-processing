@@ -3,6 +3,7 @@ from back_processing import back_processing
 
 
 class ThreadWorker(threading.Thread):
+
     def __init__(self, amqp_url, queue, thread_num):
         print(thread_num, "run")
         super().__init__()
@@ -16,13 +17,14 @@ class ThreadWorker(threading.Thread):
         self.channel = connection.channel()
         self.channel.queue_declare(queue=self.queue, durable=True)
 
-        self.channel.basic_consume(self.processing_callback, queue=self.queue, no_ack=True)
+        self.channel.basic_consume(
+            self.processing_callback, queue=self.queue, no_ack=True)
         logging.info('fontto-processing started!')
         self.channel.start_consuming()
 
     def processing_callback(self, ch, method, properties, body):
-        logging.info("%s" %self.thread_num)
-        logging.info("received %r" %body)
+        logging.info("%s" % self.thread_num)
+        logging.info("received %r" % body)
 
         received_message = json.loads(body.decode('utf8').replace("'", '"'))
 
@@ -31,7 +33,8 @@ class ThreadWorker(threading.Thread):
         # received_message['count']
         # received_message['unicodes']
         # received_message['env']
-        back_processing(received_message['userId'], received_message['count'], received_message['unicodes'], received_message['env'])
+        back_processing(received_message['userId'], received_message['count'],
+                        received_message['unicodes'], received_message['env'])
 
         received_message_dumps = json.dumps(received_message, indent=4)
         print(received_message_dumps)
