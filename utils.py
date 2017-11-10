@@ -8,6 +8,8 @@ from io import BytesIO
 import base64
 import boto3
 from generator.options.test_options import TestOptions
+from PIL import Image
+import torchvision.transforms as transforms
 
 
 def url2img(input_address):
@@ -80,3 +82,18 @@ def make_gen_opt():
     opt.serial_batches = True  # no shuffle
     opt.no_flip = True  # no flip
     return opt
+
+
+def get_transform():
+    transform_list = []
+    transform_list += [
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+    ]
+    return transforms.Compose(transform_list)
+
+
+def pil2tensor(input_image):
+    transform = get_transform()
+    output_tensor = transform(input_image)
+    return output_tensor

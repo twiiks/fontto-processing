@@ -47,7 +47,7 @@ def back_processing(userID, count, unicodes, env):
 
         #written2all(unicode, PIL_img): single PIL_img to multi PIL_imgs
         logging.info("written2all for %s" % input_unicode)
-        output_images = written2all(input_unicode, modified_PIL)
+        output_images = written2all(input_unicode, modified_PIL, opt)
         logging.info("SAME CLASS WITH unicode: %s are %s" % (input_unicode,
                                                              output_images))
 
@@ -57,9 +57,7 @@ def back_processing(userID, count, unicodes, env):
             #store2S3(env, filetype, userID, count, output_unicode, output_image): save PIL_imgs to S3
             filetype = 'bitmaps'
             logging.info("save output bitmap PIL on S3 for %s" % output_unicode)
-            store2S3(env, filetype, userID, count, output_unicode,
-                     modified_PIL)  #원래는 생성된 PIL이 들어가야
-            #            store2S3(env, filetype, userID, count, output_unicode, output_image)
+            store2S3(env, filetype, userID, count, output_unicode, output_image)
 
             #noise_filter(PIL_img): noise reduction
             logging.info("reducting output noise for %s" % output_unicode)
