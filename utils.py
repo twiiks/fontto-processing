@@ -7,6 +7,7 @@ from PIL import Image
 from io import BytesIO
 import base64
 import boto3
+from generator.options.test_options import TestOptions
 
 
 def url2img(input_address):
@@ -67,3 +68,15 @@ def ttf2S3(env, userID, count, ttf_converted):
         Key=s3key, Body=body, ContentType=contenttype, ACL='public-read')
     ttf_address = 'https://s3.ap-northeast-2.amazonaws.com/fontto/' + s3key
     return ttf_address
+
+
+def make_gen_opt():
+    """
+    - make default option for pix2pix model
+    """
+    opt = TestOptions().parse()
+    opt.nThreads = 1  # test code only supports nThreads = 1
+    opt.batchSize = 1  # test code only supports batchSize = 1
+    opt.serial_batches = True  # no shuffle
+    opt.no_flip = True  # no flip
+    return opt

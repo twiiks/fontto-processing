@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from written2all import written2all
-from utils import url2img, store2S3, ttf2S3
+from utils import url2img, store2S3, ttf2S3, make_gen_opt
 from modify import trim_resize_PIL, noise_filter, vectoralize, svgs2ttf
 import logging
 
@@ -12,6 +12,7 @@ def back_processing(userID, count, unicodes, env):
                  (userID, count))
     #INITIALIZE HASH: {'unicode': 'PIL_imgs'} (TTF 변환을 위한 hash)
     svg_set = {}
+    opt = make_gen_opt()
 
     #FOR each unicode IN unicodes (입력받은 각각의 글자에 대해 아래 작업 수행)
     for input_unicode in unicodes:
