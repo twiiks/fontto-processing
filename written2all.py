@@ -1,6 +1,7 @@
 import os
 from generator.generator import generator
 from utils import pil2tensor
+import logging
 
 
 def written2all(input_unicode, image_input, opt):
@@ -24,10 +25,10 @@ def written2all(input_unicode, image_input, opt):
                 if ext == '.pth':
                     unicode_output = dir.split('_')[1].split('.')[-1]
                     # log
-                    print("  start :[", unicode_output, "]")
+                    logging.info("  start making:[ " + unicode_output + " ]")
                     path_pth = os.path.abspath("%s/%s/%s" % (path_class, dir,
                                                              filename))
-                    print("  done! :[", unicode_output, "]")
+                    logging.info("  done making!:[ " + unicode_output + " ]")
                     image_gen = generator(image_input_tensor, opt, path_pth)
                     output_images[unicode_output] = image_gen
                     break
