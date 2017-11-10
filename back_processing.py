@@ -23,7 +23,12 @@ def back_processing(userID, count, unicodes, env):
 
         logging.info("url2img for %s" % input_unicode)
         #url2img(url): url_img -> PIL_img
-        input_PIL = url2img(input_address)
+        try:
+            input_PIL = url2img(input_address)
+        except Exception as e:
+            #if url2img fails to open input_address, it raises an error
+            logging.error("[%s] : url ' %s '을 열 수 없습니다." % (e, input_address))
+            break
 
         logging.info("trim_resize_PIL for %s" % input_unicode)
         #trim_resize_PIL(PIL, width, height, border): trim PIL_img
