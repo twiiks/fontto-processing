@@ -61,7 +61,7 @@ def back_processing(userID, count, unicodes, env):
 
         #written2all(unicode, PIL_img): single PIL_img to multi PIL_imgs
         logging.info("written2all for %s" % input_unicode)
-        output_images = written2all(input_unicode, modified_PIL, opt)
+        output_images = written2all(input_unicode, modified_PIL, opt, is_demo)
         logging.info("SAME CLASS WITH unicode: %s are %s" % (input_unicode,
                                                              output_images))
 
