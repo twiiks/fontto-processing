@@ -5,6 +5,13 @@ from utils import url2img, store2S3, ttf2S3, make_gen_opt
 from modify import trim_resize_PIL, noise_filter, vectoralize, svgs2ttf
 import logging
 
+def is_demo_v2(unicodes):
+    DEMO_UNICODES = [
+        "C5D0", "003F", "D6C8", "B828", "B41C", "B9DD", "B098", "B2C8"
+    ]
+    DEMO_UNICODES.sort()
+    unicodes.sort()
+    return DEMO_UNICODES == unicodes
 
 #received_message -> processing -> output
 def back_processing(userID, count, unicodes, env):
@@ -13,6 +20,8 @@ def back_processing(userID, count, unicodes, env):
     #INITIALIZE HASH: {'unicode': 'PIL_imgs'} (TTF 변환을 위한 hash)
     svg_set = {}
     opt = make_gen_opt()
+    is_demo = is_demo_v2(unicodes)
+    logging.info(":: demo version [%s] ::" % is_demo)
 
     #FOR each unicode IN unicodes (입력받은 각각의 글자에 대해 아래 작업 수행)
     for input_unicode in unicodes:
