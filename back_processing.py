@@ -7,7 +7,7 @@ import logging
 
 def is_demo_v2(unicodes):
     DEMO_UNICODES = [
-        "C5D0", "003F", "D6C8", "B828", "B41C", "B9DD", "B098", "B2C8"
+        "C5D0", "003F", "D6CC", "B828", "B41C", "B9DD", "B098", "B2C8"
     ]
     DEMO_UNICODES.sort()
     unicodes.sort()
