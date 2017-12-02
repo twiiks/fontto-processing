@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from PIL import Image, ImageChops, ImageOps
+from svg2ttf import insert2target, svgicon2svgfont, svg2woff, cp_svg
+import os, logging
 
 
 def scale(image, max_size, method=Image.ANTIALIAS):
@@ -52,6 +54,21 @@ def vectoralize(PIL_img):
 def svgs2ttf(svg_set):
     """
     go through hash 'svg_set', read each unicode & svgfile, compine all to one ttf file and return single ttf file
+    svg_set is svg filenames
     """
-    ttf_converted = "user_count.ttf"
-    return ttf_converted
+    DEFAULT_SVG = 'assets/NanumPen.svg'
+    USER_COUNT = 'user_count'
+    NEW_SVG = USER_COUNT + ".svg"
+    cp_svg(DEFAULT_SVG, NEW_SVG)
+    for svg in svg_set:
+        svgicon2svgfont(svg, 'making_tmp.svg')
+        insert2target('making_tmp.svg', NEW_SVG)
+
+    svg2woff(NEW_SVG)
+    # svg2ttf(NEW_SVG)
+    os.remove('making_tmp.svg')
+    logging.info(":: svgs2ttf done! removed file [%s]" % ('making_tmp.svg'))
+
+    woff_converted = USER_COUNT + '.woff'
+    # ttf_converted = USER_COUNT + '.ttf'
+    return woff_converted
