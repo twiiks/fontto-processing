@@ -64,7 +64,7 @@ def convertio(convert_PIL):
     print(req_get_status.text)
     print("get status done\n----------")
 
-    #GET result file
+    #GET result file (svg) with base64 encoded
     url_get_base64 = 'http://api.convertio.co/convert/' + res_post_base64['data']['id'] + '/dl/' + 'base64'
     params_get = {'id': res_post_base64['data']['id']}
     req_get_result = requests.get(url_get_base64, params = params_get)
@@ -73,13 +73,18 @@ def convertio(convert_PIL):
     res_get_base64 = json.loads(req_get_result.text)
     converted_base64 = res_get_base64['data']['content']
 
+    #save base64 to svg in local
+    bytes_form_base64 = converted_base64.encode()
+    decoded_base64 = base64.b64decode(bytes_form_base64)
+    unicod = 'B9D0'
+    with open(unicod + '.svg', 'wb') as svg_file:
+        svg_file.write(decoded_base64)
+
 #    #result base64 -> PIL
 #    """ not completed yet """
 #    buf = base64.b64decode(converted_base64)
 #    buf = io.BytesIO(buf)
 #    output_PIL = Image.open(buf)
-    
-    
 
 #    #Call-back url
 #    url_post_result = 'https://api.convertio.co/convert'
