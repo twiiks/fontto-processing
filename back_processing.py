@@ -6,9 +6,7 @@ from modify import trim_resize_PIL, noise_filter, vectoralize, svgs2ttf
 import logging
 
 def is_demo_v2(unicodes):
-    DEMO_UNICODES = [
-        "C5D0", "3F", "D6CC", "B828", "B41C", "B9DD", "B098", "B2C8"
-    ]
+    DEMO_UNICODES = ["B053", "B294", "B77C", "BA74"]
     DEMO_UNICODES.sort()
     unicodes.sort()
     return DEMO_UNICODES == unicodes
