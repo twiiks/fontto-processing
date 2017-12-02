@@ -77,7 +77,7 @@ def convertio(convert_PIL):
     bytes_form_base64 = converted_base64.encode()
     decoded_base64 = base64.b64decode(bytes_form_base64)
     unicod = 'B9D0'
-    with open(unicod + '.svg', 'wb') as svg_file:
+    with open('u' + unicod.upper() + '-UNI' + unicod.lower() + '.svg', 'wb') as svg_file:
         svg_file.write(decoded_base64)
 
 #    #result base64 -> PIL
