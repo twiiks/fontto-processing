@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from written2all import written2all
 from utils import url2img, store2S3, ttf2S3, make_gen_opt
-from modify import trim_resize_PIL, noise_filter, vectoralize, svgs2ttf
+from modify import trim_resize_PIL, noise_filter, vectoralize, svgs2ttf, resize_trim_PIL
 import logging
 
 def is_demo_v2(unicodes):
@@ -46,6 +46,10 @@ def back_processing(userID, count, unicodes, env):
         logging.info("save input bitmap PIL on S3 for %s" % input_unicode)
         store2S3(env, filetype, userID, count, input_unicode, modified_PIL)
 
+        #resize_trim_PIL(input_PIL, width, height, border): resize and then trim PIL image
+        logging.info("resize_trim_PIL for %s" % input_unicode)
+        modified_PIL = resize_trim_PIL(modified_PIL, 800, 1000, 0)
+
         #vectoralize(user PIL_img): vectoralize user img
         logging.info("vectoralize input PIL for %s" % input_unicode)
         vectored_svg = vectoralize(modified_PIL)
@@ -75,6 +79,10 @@ def back_processing(userID, count, unicodes, env):
             logging.info("reducting output noise for %s" % output_unicode)
             filterd = noise_filter(output_image)
 
+            #resize_trim_PIL(input_PIL, width, height, border): resize and then trim PIL image
+            logging.info("resize_trim_PIL for %s" % input_unicode)
+            modified_PIL = resize_trim_PIL(modified_PIL, 800, 1000, 0)
+            
             #vectoralize(PIL_img): vectoralize PIL_img
             logging.info("vectoralize output PIL for %s" % output_unicode)
             vectoralized = vectoralize(filterd)

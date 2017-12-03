@@ -34,6 +34,20 @@ def trim_resize_PIL(input_PIL, width, height, border):
     return image_output
 
 
+def resize_trim_PIL(input_PIL, width, height, border):
+    # resize
+    image_output = scale(input_PIL, [width, height])
+    image_output = ImageOps.expand(image_output, border=border, fill='white')
+
+    # trim
+    bg = Image.new(image_output.mode, image_output.size, image_output.getpixel((0, 0)))
+    diff = ImageChops.difference(image_output, bg)
+    diff = ImageChops.add(diff, diff, 2.0, -100)
+    bbox = diff.getbbox()
+    image_output = image_output.crop(bbox)
+    return image_output
+
+
 def noise_filter(PIL_img):
     """
     IF use convertio, THEN just pass out the input
