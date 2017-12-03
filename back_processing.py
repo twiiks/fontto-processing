@@ -80,9 +80,9 @@ def back_processing(userID, count, unicodes, env):
             filterd = noise_filter(output_image)
 
             #resize_trim_PIL(input_PIL, width, height, border): resize and then trim PIL image
-            logging.info("resize_trim_PIL for %s" % input_unicode)
-            modified_PIL = resize_trim_PIL(modified_PIL, 800, 1000, 0)
-            
+            logging.info("resize_trim_PIL for %s" % output_unicode)
+            filterd = resize_trim_PIL(filterd, 800, 1000, 0)
+
             #vectoralize(PIL_img): vectoralize PIL_img
             logging.info("vectoralize output PIL for %s" % output_unicode)
             vectoralized = vectoralize(filterd)
