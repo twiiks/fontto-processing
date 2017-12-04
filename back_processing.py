@@ -119,6 +119,7 @@ def test():
     woff_addr = back_processing(test_userID, test_count, test_unicodes, test_env)
     print(woff_addr)
 
+
 if __name__ == '__main__':
     set_logging('test_log.txt')
     test()

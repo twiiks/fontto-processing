@@ -113,8 +113,8 @@ def svgs2ttf(svg_set):
     svg_set is svg filenames
     """
     DEFAULT_SVG = 'assets/NanumPen.svg'
-    USER_COUNT = 'user_count'
-    NEW_SVG = USER_COUNT + ".svg"
+    FONT_NAME = 'default'
+    NEW_SVG = FONT_NAME + ".svg"
     cp_svg(DEFAULT_SVG, NEW_SVG)
     for svg in svg_set:
         svgicon2svgfont(svg, 'making_tmp.svg')
@@ -125,6 +125,6 @@ def svgs2ttf(svg_set):
     os.remove('making_tmp.svg')
     logging.info(":: svgs2ttf done! removed file [%s]" % ('making_tmp.svg'))
 
-    woff_converted = USER_COUNT + '.woff'
+    woff_converted = FONT_NAME + '.woff'
     # ttf_converted = USER_COUNT + '.ttf'
     return woff_converted

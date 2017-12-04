@@ -49,8 +49,8 @@ def svg2woff(svg_filname):
     최종 svg를 woff로 변환
     '''
     FONT_NAME = svg_filname.split('.')[0] + '.woff'
-    
-    logging.info(":: svg2woff start svg name :  [%s]" % svg2woff)
+
+    logging.info(":: svg2woff start svg name :  [%s]" % FONT_NAME)
     logging.info(":: [system call] svg2ttf %s %s" % (svg_filname, FONT_NAME))
     os.system("svg2ttf %s %s" % (svg_filname, FONT_NAME))
     logging.info(":: svg2woff done! made file  [%s]" % FONT_NAME)
@@ -64,7 +64,7 @@ def svg2ttf(svg_filename):
 
     FONT_NAME = svg_filname.split('.')[0] + '.ttf'
 
-    logging.info(":: svg2woff start svg name :  [%s]" % svg2woff)
+    logging.info(":: svg2woff start svg name :  [%s]" % FONT_NAME)
     logging.info(":: [system call] svg2ttf %s %s" % (svg_filname, FONT_NAME))
     os.system("svg2ttf %s %s" % (svg_filname, FONT_NAME))
     logging.info(":: svg2woff done! made file  [%s]" % FONT_NAME)
