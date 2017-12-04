@@ -10,7 +10,7 @@ def processing():
     print(dataDict)
 
     tempResponse = json.dumps(
-        {'woff': 'https://s3.ap-northeast-2.amazonaws.com/fontto/example/LotteMartHappyMedium.woff'}
+        {'woff': 'https://s3.ap-northeast-2.amazonaws.com/fontto/example/UhBeeKang-Ja.woff'}
     )
     response = app.response_class(
         response=tempResponse,
@@ -20,4 +20,4 @@ def processing():
     return response
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
