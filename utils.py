@@ -10,7 +10,7 @@ import boto3
 from generator.options.test_options import TestOptions
 from PIL import Image
 import torchvision.transforms as transforms
-import logging, sys
+import logging, sys, os
 from logging import handlers
 
 
@@ -72,6 +72,19 @@ def ttf2S3(env, userID, count, ttf_converted):
         Key=s3key, Body=body, ContentType=contenttype, ACL='public-read')
     ttf_address = 'https://s3.ap-northeast-2.amazonaws.com/fontto/' + s3key
     return ttf_address
+
+
+def woff2S3(env, userID, count, woff_converted):
+    s3key = '%s/outputs/ttf/%s/%s' % (env, userID, count)
+    logging.info(":: send [%s] to s3 [%s/] " % (woff_converted,
+                                                's3://fontto/' + s3key))
+    logging.info(":: [system call] aws s3 cp --acl public-read %s %s/" %
+                 (woff_converted, s3key))
+    os.system("aws s3 cp --acl public-read %s %s/" % (woff_converted,
+                                                      's3://fontto/' + s3key))
+    logging.info(":: [done system call]")
+    woff_addr = 'https://s3.ap-northeast-2.amazonaws.com/fontto/' + s3key + "/" + woff_converted
+    return woff_addr
 
 
 def make_gen_opt():
