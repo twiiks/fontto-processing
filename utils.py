@@ -10,6 +10,8 @@ import boto3
 from generator.options.test_options import TestOptions
 from PIL import Image
 import torchvision.transforms as transforms
+import logging, sys
+from logging import handlers
 
 
 def url2img(input_address):
@@ -97,3 +99,22 @@ def pil2tensor(input_image):
     transform = get_transform()
     output_tensor = transform(input_image)
     return output_tensor
+
+
+def set_logging(log_path):
+    log = logging.getLogger('')
+    log.setLevel(logging.DEBUG)
+    format = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setFormatter(format)
+    log.addHandler(ch)
+
+    fh = handlers.RotatingFileHandler(
+        log_path, maxBytes=(1048576 * 5), backupCount=7)
+    fh.setFormatter(format)
+    log.addHandler(fh)
+
+    logging.basicConfig(
+        filename=log_path, datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)

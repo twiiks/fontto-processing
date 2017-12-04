@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from written2all import written2all
-from utils import url2img, store2S3, ttf2S3, make_gen_opt
+from utils import url2img, store2S3, ttf2S3, make_gen_opt, set_logging
 from modify import trim_resize_PIL, noise_filter, vectoralize, svgs2ttf, resize_trim_PIL
 import logging
+
 
 def is_demo_v2(unicodes):
     DEMO_UNICODES = ["B053", "B294", "B77C", "BA74"]
@@ -118,4 +119,5 @@ def test():
 
 
 if __name__ == '__main__':
+    set_logging('test_log.txt')
     test()

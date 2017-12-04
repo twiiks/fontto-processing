@@ -1,5 +1,5 @@
 import argparse, logging, thread_worker, sys
-from logging import handlers
+from utils import set_logging
 
 
 def parse_args():
@@ -30,23 +30,8 @@ def main():
     log_path = args.log_path
     thread_num = args.thread_num
 
-    # set logging
-    log = logging.getLogger('')
-    log.setLevel(logging.DEBUG)
-    format = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setFormatter(format)
-    log.addHandler(ch)
-
-    fh = handlers.RotatingFileHandler(
-        log_path, maxBytes=(1048576 * 5), backupCount=7)
-    fh.setFormatter(format)
-    log.addHandler(fh)
-
-    logging.basicConfig(
-        filename=log_path, datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.DEBUG)
+    # set log
+    set_logging(log_path)
 
     # threading
     for i in range(0, thread_num):
