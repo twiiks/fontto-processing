@@ -16,7 +16,7 @@ def back_processing(userID, count, unicodes, env):
     logging.info("-----START BACKPROCESSING for userID: %s, count: %s-----" %
                  (userID, count))
     #INITIALIZE HASH: {'unicode': 'PIL_imgs'} (TTF 변환을 위한 hash)
-    svg_set = {}
+    svg_set = []
     opt = make_gen_opt()
     is_demo = is_demo_v2(unicodes)
     logging.info(":: demo version [%s] ::" % is_demo)
@@ -50,7 +50,7 @@ def back_processing(userID, count, unicodes, env):
         logging.info("vectoralize input PIL for %s" % input_unicode)
         vectored_svg = vectoralize(modified_PIL)
         #APPEND vectoralized user img to HASH
-        svg_set[input_unicode] = vectored_svg
+        svg_set.append(vectored_svg)
 
         #store2S3(env, filetype, userID, count, input_unicode, vectored_svg): save vectoralized image to vectors-S3
         filetype = 'vectors'
@@ -79,7 +79,7 @@ def back_processing(userID, count, unicodes, env):
             logging.info("vectoralize output PIL for %s" % output_unicode)
             vectoralized = vectoralize(filterd)
             #APPEND vectoralized PIL_img to HASH
-            svg_set[output_unicode] = vectoralized
+            svg_set.append(vectoralized)
 
             #store2S3(env, filetype, userID, count, output_unicode, vectoralized): save vectoralized image to vectors-S3
             filetype = 'vectors'
