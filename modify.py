@@ -2,7 +2,13 @@
 # -*- coding: utf-8 -*-
 from PIL import Image, ImageChops, ImageOps
 from svg2ttf import insert2target, svgicon2svgfont, svg2woff, cp_svg
-import os, logging
+import os
+import logging
+import base64
+from io import BytesIO
+import io
+import requests
+import json
 
 
 def scale(image, max_size, method=Image.ANTIALIAS):
@@ -34,6 +40,20 @@ def trim_resize_PIL(input_PIL, width, height, border):
     return image_output
 
 
+def resize_trim_PIL(input_PIL, width, height, border):
+    # resize
+    image_output = scale(input_PIL, [width, height])
+    image_output = ImageOps.expand(image_output, border=border, fill='white')
+
+    # trim
+    bg = Image.new(image_output.mode, image_output.size, image_output.getpixel((0, 0)))
+    diff = ImageChops.difference(image_output, bg)
+    diff = ImageChops.add(diff, diff, 2.0, -100)
+    bbox = diff.getbbox()
+    image_output = image_output.crop(bbox)
+    return image_output
+
+
 def noise_filter(PIL_img):
     """
     IF use convertio, THEN just pass out the input
@@ -45,10 +65,46 @@ def noise_filter(PIL_img):
 
 def vectoralize(PIL_img):
     """
-    take PIL, convert to JPG, pass through convertio API, return 'path/name.svg'
+    take PIL, convert to base64, pass through convertio API, return 'path/name.svg'
     """
-    vectored_PIL = "./assets/sample.svg"  #원래는 생성된 .svg 파일이 들어가야
-    return vectored_PIL
+    # change PIL -> base64
+    buffer = BytesIO()
+    PIL_img.save(buffer, format='JPEG')
+    convert_base64 = base64.b64encode(buffer.getvalue())
+    
+    # POST base64 for conversion
+    url_post_base64 = 'https://api.convertio.co/convert'
+    params_post = {'apikey': os.environ["CONVERTIO_TOKEN"], 
+                   'input': 'base64', 
+                   'file': convert_base64.decode("utf-8"), 
+                   'filename': 'BD00.jpg',
+                   'outputformat': 'svg'}
+    req_post_base64 = requests.post(url_post_base64, data=json.dumps(params_post))
+
+    #GET conversion status
+    res_post_base64 = json.loads(req_post_base64.text)
+    url_get_status = 'https://api.convertio.co/convert/' + res_post_base64['data']['id'] + '/status'
+    params_get = { 'id': res_post_base64['data']['id'] }
+    req_get_status = requests.get(url_get_status, params = params_get)
+
+    # GET result file (svg) with base64 encoded
+    url_get_base64 = 'http://api.convertio.co/convert/' + res_post_base64['data']['id'] + '/dl/' + 'base64'
+    params_get = {'id': res_post_base64['data']['id']}
+    req_get_result = requests.get(url_get_base64, params = params_get)
+    print(req_get_result.status_code)
+    print(req_get_result.text)
+    res_get_base64 = json.loads(req_get_result.text)
+    converted_base64 = res_get_base64['data']['content']
+
+    #save base64 to svg in local
+    bytes_form_base64 = converted_base64.encode()
+    decoded_base64 = base64.b64decode(bytes_form_base64)
+    unicod = 'B9D0'
+    with open('u' + unicod.upper() + '-UNI' + unicod.lower() + '.svg', 'wb') as svg_file:
+        svg_file.write(decoded_base64)
+    
+    vectored_local_svg = 'u' + unicod.upper() + '-UNI' + unicod.lower() + '.svg'  
+    return vectored_local_svg
 
 
 def svgs2ttf(svg_set):
