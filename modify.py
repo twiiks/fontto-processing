@@ -85,7 +85,11 @@ def vectoralize(PIL_img):
     res_post_base64 = json.loads(req_post_base64.text)
     url_get_status = 'https://api.convertio.co/convert/' + res_post_base64['data']['id'] + '/status'
     params_get = { 'id': res_post_base64['data']['id'] }
-    req_get_status = requests.get(url_get_status, params = params_get)
+    while(True):
+        req_get_status = requests.get(url_get_status, params = params_get)
+        res_get_status = json.loads(req_get_status.text)
+        if res_get_status['data']['step'] == 'finish':
+            break
 
     # GET result file (svg) with base64 encoded
     url_get_base64 = 'http://api.convertio.co/convert/' + res_post_base64['data']['id'] + '/dl/' + 'base64'
