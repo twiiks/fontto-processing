@@ -53,7 +53,7 @@ def back_processing(userID, count, unicodes, env):
 
         #vectoralize(user PIL_img): vectoralize user img
         logging.info("vectoralize input PIL for %s" % input_unicode)
-        vectored_svg = vectoralize(modified_PIL)
+        vectored_svg = vectoralize(modified_PIL, input_unicode)
         #APPEND vectoralized user img to HASH
         svg_set.append(vectored_svg)
 
@@ -86,7 +86,7 @@ def back_processing(userID, count, unicodes, env):
 
             #vectoralize(PIL_img): vectoralize PIL_img
             logging.info("vectoralize output PIL for %s" % output_unicode)
-            vectoralized = vectoralize(filterd)
+            vectoralized = vectoralize(filterd, output_unicode)
             #APPEND vectoralized PIL_img to HASH
             svg_set.append(vectoralized)
 

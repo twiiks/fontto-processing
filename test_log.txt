@@ -1,0 +1,29 @@
+2017-12-05 12:24:04,047 - root - INFO - -----START BACKPROCESSING for userID: seo, count: 0-----
+2017-12-05 12:24:04,050 - root - INFO - :: demo version [False] ::
+2017-12-05 12:24:04,050 - root - INFO - -----process for INPUT_UNICODE: B9DD
+2017-12-05 12:24:04,050 - root - INFO - url2img for B9DD
+2017-12-05 12:24:04,144 - root - INFO - trim_resize_PIL for B9DD
+2017-12-05 12:24:04,163 - root - INFO - save input bitmap PIL on S3 for B9DD
+2017-12-05 12:24:04,163 - root - INFO - resize_trim_PIL for B9DD
+2017-12-05 12:24:04,194 - root - INFO - vectoralize input PIL for B9DD
+2017-12-05 12:24:04,212 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.convertio.co
+2017-12-05 12:24:07,433 - urllib3.connectionpool - DEBUG - https://api.convertio.co:443 "POST /convert HTTP/1.1" 200 None
+2017-12-05 12:24:07,441 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): api.convertio.co
+2017-12-05 12:24:08,735 - urllib3.connectionpool - DEBUG - https://api.convertio.co:443 "GET /convert/7678a572aa571c47302f121a0403c1c8/status?id=7678a572aa571c47302f121a0403c1c8 HTTP/1.1" 200 None
+2017-12-05 12:24:08,743 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): api.convertio.co
+2017-12-05 12:24:09,362 - urllib3.connectionpool - DEBUG - http://api.convertio.co:80 "GET /convert/7678a572aa571c47302f121a0403c1c8/dl/base64?id=7678a572aa571c47302f121a0403c1c8 HTTP/1.1" 200 None
+2017-12-05 12:24:09,365 - root - INFO - save vectoralized input PIL on S3 for B9DD
+2017-12-05 12:24:09,365 - root - INFO - written2all for B9DD
+2017-12-05 12:24:09,366 - root - INFO - SAME CLASS WITH unicode: B9DD are {}
+2017-12-05 12:24:09,366 - root - INFO - svgs2ttf start for userID: seo, count: 0
+2017-12-05 12:24:10,008 - root - INFO - :: [system call] svgicons2svgfont uB9DD-UNIb9dd.svg > making_tmp.svg
+2017-12-05 12:24:10,304 - root - INFO - :: svgicons2svgfont done! made file [making_tmp.svg]
+2017-12-05 12:24:10,304 - root - INFO - :: insert2target start source: making_tmp.svg, target: user_count.svg
+2017-12-05 12:24:10,803 - root - INFO - :: insert2target done! made file [user_count.svg]
+2017-12-05 12:24:10,810 - root - INFO - :: svg2woff start svg name :  [<function svg2woff at 0x1080d8bf8>]
+2017-12-05 12:24:10,811 - root - INFO - :: [system call] svg2ttf user_count.svg user_count.woff
+2017-12-05 12:24:28,432 - root - INFO - :: svg2woff done! made file  [user_count.woff]
+2017-12-05 12:24:28,433 - root - INFO - :: svgs2ttf done! removed file [making_tmp.svg]
+2017-12-05 12:24:28,433 - root - INFO - save ttf2S3 start for userID: seo, count: 0
+2017-12-05 12:24:28,433 - root - INFO - -----END BACKPROCESSING for userID: seo, count: 0-----
+2017-12-05 12:24:28,433 - root - INFO - ------------------------------------------------------------

@@ -63,7 +63,7 @@ def noise_filter(PIL_img):
     return modified_PIL
 
 
-def vectoralize(PIL_img):
+def vectoralize(PIL_img, unicod):
     """
     take PIL, convert to base64, pass through convertio API, return 'path/name.svg'
     """
@@ -103,7 +103,7 @@ def vectoralize(PIL_img):
     #save base64 to svg in local
     bytes_form_base64 = converted_base64.encode()
     decoded_base64 = base64.b64decode(bytes_form_base64)
-    unicod = 'B9D0'
+    unicod = unicod
     with open('u' + unicod.upper() + '-UNI' + unicod.lower() + '.svg', 'wb') as svg_file:
         svg_file.write(decoded_base64)
     
