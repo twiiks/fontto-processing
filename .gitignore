@@ -5,3 +5,5 @@ data/
 *.woff
 *.ttf
 *.png
+__pycache__/
+*.pyc

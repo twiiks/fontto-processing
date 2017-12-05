@@ -48,12 +48,13 @@ def svg2woff(svg_filname):
     '''
     최종 svg를 woff로 변환
     '''
-    file_name = svg_filname.split('.')[0]
-    logging.info(":: svg2woff start svg name :  [%s]" % svg2woff)
-    logging.info(":: [system call] svg2ttf %s %s" % (svg_filname,
-                                                     (file_name + '.woff')))
-    os.system("svg2ttf %s %s" % (svg_filname, (file_name + '.woff')))
-    logging.info(":: svg2woff done! made file  [%s]" % (file_name + '.woff'))
+    FONT_NAME = svg_filname.split('.')[0] + '.woff'
+
+    logging.info(":: svg2woff start svg name :  [%s]" % FONT_NAME)
+    logging.info(":: [system call] svg2ttf %s %s" % (svg_filname, FONT_NAME))
+    os.system("svg2ttf %s %s" % (svg_filname, FONT_NAME))
+    logging.info(":: svg2woff done! made file  [%s]" % FONT_NAME)
+    return FONT_NAME
 
 
 def svg2ttf(svg_filename):
@@ -61,12 +62,13 @@ def svg2ttf(svg_filename):
     최종 svg를 ttf로 변환
     '''
 
-    file_name = svg_filname.split('.')[0]
-    logging.info(":: svg2ttf start svg name : [%s]" % svg_filename)
-    logging.info(":: [system call] svg2ttf %s %s" % (svg_filname,
-                                                     (file_name + '.ttf')))
-    os.system("svg2ttf %s %s" % (svg_filname, (file_name + '.ttf')))
-    logging.info(":: svg2ttf done! svg name : [%s]" % (file_name + '.ttf'))
+    FONT_NAME = svg_filname.split('.')[0] + '.ttf'
+
+    logging.info(":: svg2woff start svg name :  [%s]" % FONT_NAME)
+    logging.info(":: [system call] svg2ttf %s %s" % (svg_filname, FONT_NAME))
+    os.system("svg2ttf %s %s" % (svg_filname, FONT_NAME))
+    logging.info(":: svg2woff done! made file  [%s]" % FONT_NAME)
+    return FONT_NAME
 
 
 def cp_svg(source, target):

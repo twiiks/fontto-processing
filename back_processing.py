@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from written2all import written2all
-from utils import url2img, store2S3, ttf2S3, make_gen_opt, set_logging
+from utils import url2img, store2S3, ttf2S3, make_gen_opt, set_logging, woff2S3
 from modify import trim_resize_PIL, noise_filter, vectoralize, svgs2ttf, resize_trim_PIL
 import logging
 
@@ -103,19 +103,21 @@ def back_processing(userID, count, unicodes, env):
     #ttf2S3(userID, count, ttf, s3key_ttfs): save converted ttf file to S3 (완성된 ttf S3에 저장)
     logging.info("save ttf2S3 start for userID: %s, count: %s" % (userID,
                                                                   count))
-    ttf2S3(env, userID, count, ttf_converted)
+    # ttf2S3(env, userID, count, ttf_converted)
+    woff_addr = woff2S3(env, userID, count, ttf_converted)
 
     logging.info("-----END BACKPROCESSING for userID: %s, count: %s-----" %
                  (userID, count))
     logging.info("------------------------------------------------------------")
-
+    return woff_addr
 
 def test():
     test_userID = 'seo'
     test_count = 0
     test_unicodes = ["B9DD"]
     test_env = 'development'
-    back_processing(test_userID, test_count, test_unicodes, test_env)
+    woff_addr = back_processing(test_userID, test_count, test_unicodes, test_env)
+    print(woff_addr)
 
 
 if __name__ == '__main__':
