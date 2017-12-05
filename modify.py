@@ -59,8 +59,8 @@ def noise_filter(PIL_img):
     IF use convertio, THEN just pass out the input
     ELSE, take PIL image and return PIL image
     """
-    modified_PIL = "modified_PIL"
-    return modified_PIL
+    # modified_PIL = "modified_PIL"
+    return PIL_img
 
 
 def vectoralize(PIL_img, unicod):

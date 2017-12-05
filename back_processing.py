@@ -47,20 +47,6 @@ def back_processing(userID, count, unicodes, env):
         logging.info("save input bitmap PIL on S3 for %s" % input_unicode)
         store2S3(env, filetype, userID, count, input_unicode, modified_PIL)
 
-        #resize_trim_PIL(input_PIL, width, height, border): resize and then trim PIL image
-        logging.info("resize_trim_PIL for %s" % input_unicode)
-        modified_PIL = resize_trim_PIL(modified_PIL, 800, 1000, 0)
-
-        #vectoralize(user PIL_img): vectoralize user img
-        logging.info("vectoralize input PIL for %s" % input_unicode)
-        vectored_svg = vectoralize(modified_PIL, input_unicode)
-        #APPEND vectoralized user img to HASH
-        svg_set.append(vectored_svg)
-
-        #store2S3(env, filetype, userID, count, input_unicode, vectored_svg): save vectoralized image to vectors-S3
-        filetype = 'vectors'
-        logging.info("save vectoralized input PIL on S3 for %s" % input_unicode)
-        store2S3(env, filetype, userID, count, input_unicode, vectored_svg)
 
         #written2all(unicode, PIL_img): single PIL_img to multi PIL_imgs
         logging.info("written2all for %s" % input_unicode)
@@ -95,6 +81,22 @@ def back_processing(userID, count, unicodes, env):
             logging.info(
                 "save vectoralized output PIL on S3 for %s" % output_unicode)
             store2S3(env, filetype, userID, count, output_unicode, vectoralized)
+
+        #resize_trim_PIL(input_PIL, width, height, border): resize and then trim PIL image
+        logging.info("resize_trim_PIL for %s" % input_unicode)
+        modified_PIL = resize_trim_PIL(modified_PIL, 800, 1000, 0)
+
+        #vectoralize(user PIL_img): vectoralize user img
+        logging.info("vectoralize input PIL for %s" % input_unicode)
+        vectored_svg = vectoralize(modified_PIL, input_unicode)
+        #APPEND vectoralized user img to HASH
+        svg_set.append(vectored_svg)
+
+        #store2S3(env, filetype, userID, count, input_unicode, vectored_svg): save vectoralized image to vectors-S3
+        filetype = 'vectors'
+        logging.info("save vectoralized input PIL on S3 for %s" % input_unicode)
+        store2S3(env, filetype, userID, count, input_unicode, vectored_svg)
+
 
     #svgs2ttf(HASH): convert HASH to ttf file (HASH 안의 모든 svg -> ttf)
     logging.info("svgs2ttf start for userID: %s, count: %s" % (userID, count))
