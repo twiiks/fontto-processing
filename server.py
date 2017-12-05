@@ -2,6 +2,8 @@ from flask import Flask
 from flask import request
 import json
 from back_processing import back_processing
+from utils import set_logging
+
 app = Flask(__name__)
 
 
@@ -9,6 +11,9 @@ app = Flask(__name__)
 def processing():
     data = request.data
     dataDict = json.loads(data)
+
+    # set log
+    set_logging('server_log.txt')
 
     userId = dataDict['userId']
     unicodes = dataDict['unicodes']
