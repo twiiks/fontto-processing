@@ -6,7 +6,7 @@ import logging
 
 def written2all(input_unicode, image_input, opt, is_demo):
     if is_demo:
-        path_class = "./data/pths/%s/" % (input_unicode)
+        path_class = "./data/pths_demo/%s/" % (input_unicode)
     else:
         path_class = "./data/pths/%s/" % (input_unicode)
     if not os.path.isdir(path_class):
