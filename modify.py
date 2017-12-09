@@ -71,12 +71,12 @@ def vectoralize(PIL_img, unicod):
     buffer = BytesIO()
     PIL_img.save(buffer, format='JPEG')
     convert_base64 = base64.b64encode(buffer.getvalue())
-    
+
     # POST base64 for conversion
     url_post_base64 = 'https://api.convertio.co/convert'
-    params_post = {'apikey': os.environ["CONVERTIO_TOKEN"], 
-                   'input': 'base64', 
-                   'file': convert_base64.decode("utf-8"), 
+    params_post = {'apikey': os.environ["CONVERTIO_TOKEN"],
+                   'input': 'base64',
+                   'file': convert_base64.decode("utf-8"),
                    'filename': 'BD00.jpg',
                    'outputformat': 'svg'}
     req_post_base64 = requests.post(url_post_base64, data=json.dumps(params_post))
@@ -86,7 +86,7 @@ def vectoralize(PIL_img, unicod):
     url_get_status = 'https://api.convertio.co/convert/' + res_post_base64['data']['id'] + '/status'
     params_get = { 'id': res_post_base64['data']['id'] }
     while(True):
-        req_get_status = requests.get(url_get_status, params = params_get)
+        req_get_status = requests.get(url_get_status, params=params_get)
         res_get_status = json.loads(req_get_status.text)
         if res_get_status['data']['step'] == 'finish':
             break
@@ -106,8 +106,21 @@ def vectoralize(PIL_img, unicod):
     unicod = unicod
     with open('u' + unicod.upper() + '-UNI' + unicod.lower() + '.svg', 'wb') as svg_file:
         svg_file.write(decoded_base64)
-    
-    vectored_local_svg = 'u' + unicod.upper() + '-UNI' + unicod.lower() + '.svg'  
+
+    vectored_local_svg = 'u' + unicod.upper() + '-UNI' + unicod.lower() + '.svg'
+    return vectored_local_svg
+
+
+def vectoralize_potrace(PIL_img, unicod):
+    """
+    take PIL, convert to svg and save to vectored_local_svg
+    """
+    path = 'tmp/'
+    file_name = 'u' + unicod.upper() + '-UNI' + unicod.lower()
+    PIL_img.save(path + file_name + '.bmp')
+    logging.info(":: [system call] potrace -s %s" % (path + file_name + '.bmp'))
+    os.system("potrace -s %s" % (path + file_name + '.bmp'))
+    vectored_local_svg = path + file_name + '.svg'
     return vectored_local_svg
 
 

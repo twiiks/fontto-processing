@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from written2all import written2all
 from utils import url2img, store2S3, ttf2S3, make_gen_opt, set_logging, woff2S3
-from modify import trim_resize_PIL, noise_filter, vectoralize, svgs2ttf, resize_trim_PIL
+from modify import trim_resize_PIL, noise_filter, vectoralize, svgs2ttf, resize_trim_PIL, vectoralize_potrace
 import logging
 
 
@@ -44,8 +44,8 @@ def back_processing(userID, count, unicodes, env):
 
         #store2S3(env, filetype, userID, count, input_unicode, modified_PIL): save output BITMAPS of input image
         filetype = 'bitmaps'
-        logging.info("save input bitmap PIL on S3 for %s" % input_unicode)
-        store2S3(env, filetype, userID, count, input_unicode, modified_PIL)
+        # logging.info("save input bitmap PIL on S3 for %s" % input_unicode)
+        # store2S3(env, filetype, userID, count, input_unicode, modified_PIL)
 
 
         #written2all(unicode, PIL_img): single PIL_img to multi PIL_imgs
@@ -59,8 +59,8 @@ def back_processing(userID, count, unicodes, env):
             logging.info("-----process for OUTPUT_UNICODE: %s" % output_unicode)
             #store2S3(env, filetype, userID, count, output_unicode, output_image): save PIL_imgs to S3
             filetype = 'bitmaps'
-            logging.info("save output bitmap PIL on S3 for %s" % output_unicode)
-            store2S3(env, filetype, userID, count, output_unicode, output_image)
+            # logging.info("save output bitmap PIL on S3 for %s" % output_unicode)
+            # store2S3(env, filetype, userID, count, output_unicode, output_image)
 
             #noise_filter(PIL_img): noise reduction
             logging.info("reducting output noise for %s" % output_unicode)
@@ -70,9 +70,9 @@ def back_processing(userID, count, unicodes, env):
             logging.info("resize_trim_PIL for %s" % output_unicode)
             filterd = resize_trim_PIL(filterd, 800, 1000, 0)
 
-            #vectoralize(PIL_img): vectoralize PIL_img
+            #vectoralize_potrace(PIL_img, unicode): vectoralize PIL_img
             logging.info("vectoralize output PIL for %s" % output_unicode)
-            vectoralized = vectoralize(filterd, output_unicode)
+            vectoralized = vectoralize_potrace(filterd, output_unicode)
             #APPEND vectoralized PIL_img to HASH
             svg_set.append(vectoralized)
 
@@ -80,22 +80,22 @@ def back_processing(userID, count, unicodes, env):
             filetype = 'vectors'
             logging.info(
                 "save vectoralized output PIL on S3 for %s" % output_unicode)
-            store2S3(env, filetype, userID, count, output_unicode, vectoralized)
+            # store2S3(env, filetype, userID, count, output_unicode, vectoralized)
 
         #resize_trim_PIL(input_PIL, width, height, border): resize and then trim PIL image
         logging.info("resize_trim_PIL for %s" % input_unicode)
         modified_PIL = resize_trim_PIL(modified_PIL, 800, 1000, 0)
 
-        #vectoralize(user PIL_img): vectoralize user img
+        #vectoralize_potrace(PIL_img, unicode): vectoralize user img
         logging.info("vectoralize input PIL for %s" % input_unicode)
-        vectored_svg = vectoralize(modified_PIL, input_unicode)
+        vectored_svg = vectoralize_potrace(modified_PIL, input_unicode)
         #APPEND vectoralized user img to HASH
         svg_set.append(vectored_svg)
 
         #store2S3(env, filetype, userID, count, input_unicode, vectored_svg): save vectoralized image to vectors-S3
         filetype = 'vectors'
-        logging.info("save vectoralized input PIL on S3 for %s" % input_unicode)
-        store2S3(env, filetype, userID, count, input_unicode, vectored_svg)
+        # logging.info("save vectoralized input PIL on S3 for %s" % input_unicode)
+        # store2S3(env, filetype, userID, count, input_unicode, vectored_svg)
 
 
     #svgs2ttf(HASH): convert HASH to ttf file (HASH 안의 모든 svg -> ttf)
@@ -113,12 +113,14 @@ def back_processing(userID, count, unicodes, env):
     logging.info("------------------------------------------------------------")
     return woff_addr
 
+
 def test():
     test_userID = 'seo'
     test_count = 0
     test_unicodes = ["B9DD"]
     test_env = 'development'
-    woff_addr = back_processing(test_userID, test_count, test_unicodes, test_env)
+    woff_addr = back_processing(test_userID, test_count, test_unicodes,
+                                test_env)
     print(woff_addr)
 
 
