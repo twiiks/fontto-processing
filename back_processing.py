@@ -10,7 +10,7 @@ def is_demo_v2(unicodes):
     DEMO_UNICODES = ["B053", "B294", "B77C", "BA74"]
     DEMO_UNICODES.sort()
     unicodes.sort()
-    return DEMO_UNICODES == unicodes
+    return True
 
 #received_message -> processing -> output
 def back_processing(userID, count, unicodes, env):
@@ -50,7 +50,8 @@ def back_processing(userID, count, unicodes, env):
 
         #written2all(unicode, PIL_img): single PIL_img to multi PIL_imgs
         logging.info("written2all for %s" % input_unicode)
-        output_images = written2all(input_unicode, modified_PIL, opt, is_demo)
+        output_images = written2all(input_unicode, modified_PIL, opt, is_demo,
+                                    unicodes)
         logging.info("SAME CLASS WITH unicode: %s are %s" % (input_unicode,
                                                              output_images))
 

@@ -4,7 +4,7 @@ from utils import pil2tensor
 import logging
 
 
-def written2all(input_unicode, image_input, opt, is_demo):
+def written2all(input_unicode, image_input, opt, is_demo, unicodes):
     if is_demo:
         path_class = "./data/pths_demo/%s/" % (input_unicode)
     else:
@@ -27,6 +27,12 @@ def written2all(input_unicode, image_input, opt, is_demo):
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.pth':
                     unicode_output = dir.split('_')[1].split('.')[-1]
+                    if unicode_output in unicodes:
+                        logging.info(
+                            "PASS making [%s] : unicode is aleady in input",
+                            (unicode_output))
+                        break
+
                     # log
                     logging.info("  start making:[ " + unicode_output + " ]")
                     path_pth = os.path.abspath("%s/%s/%s" % (path_class, dir,
