@@ -9,6 +9,8 @@ from io import BytesIO
 import io
 import requests
 import json
+import numpy as np
+import cv2
 
 
 def scale(image, max_size, method=Image.ANTIALIAS):
@@ -59,8 +61,12 @@ def noise_filter(PIL_img):
     IF use convertio, THEN just pass out the input
     ELSE, take PIL image and return PIL image
     """
-    # modified_PIL = "modified_PIL"
-    return PIL_img
+    kernel = np.ones((5,5), np.uint8)
+    PlL_img = cv2.erode(np.array(PIL_img), kernel, iterations = 1)
+    PlL_img = cv2.dilate(np.array(PIL_img), kernel, iterations = 1)
+    denoides_img = PIL_img
+    
+    return denoides_img
 
 
 def vectoralize(PIL_img, unicod):
